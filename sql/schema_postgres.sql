@@ -1,0 +1,57 @@
+-- PostgreSQL schema. First create the database once (pgAdmin or psql):
+--   CREATE DATABASE credit_risk_db;
+-- then connect to credit_risk_db and run this file.
+
+DROP TABLE IF EXISTS loan_data;
+CREATE TABLE loan_data (
+    id                          SERIAL PRIMARY KEY,
+    SK_ID_CURR                  INT NOT NULL,
+    NAME_CONTRACT_TYPE          VARCHAR(30),
+    AMT_ANNUITY                 NUMERIC(14,2),
+    AMT_APPLICATION             NUMERIC(14,2),
+    AMT_CREDIT                  NUMERIC(14,2),
+    AMT_DOWN_PAYMENT            NUMERIC(14,2),
+    AMT_GOODS_PRICE             NUMERIC(14,2),
+    WEEKDAY_APPR_PROCESS_START  VARCHAR(12),
+    HOUR_APPR_PROCESS_START     SMALLINT,
+    FLAG_LAST_APPL_PER_CONTRACT CHAR(1),
+    NFLAG_LAST_APPL_IN_DAY      SMALLINT,
+    RATE_DOWN_PAYMENT           NUMERIC(8,6),
+    NAME_CASH_LOAN_PURPOSE      VARCHAR(60),
+    NAME_CONTRACT_STATUS        VARCHAR(20),
+    DAYS_DECISION               INT,
+    NAME_PAYMENT_TYPE           VARCHAR(60),
+    CODE_REJECT_REASON          VARCHAR(30),
+    NAME_TYPE_SUITE             VARCHAR(30),
+    NAME_CLIENT_TYPE            VARCHAR(20),
+    NAME_GOODS_CATEGORY         VARCHAR(40),
+    NAME_PORTFOLIO              VARCHAR(20),
+    NAME_PRODUCT_TYPE           VARCHAR(20),
+    CHANNEL_TYPE                VARCHAR(40),
+    SELLERPLACE_AREA            INT,
+    NAME_SELLER_INDUSTRY        VARCHAR(40),
+    CNT_PAYMENT                 NUMERIC(6,1),
+    NAME_YIELD_GROUP            VARCHAR(20),
+    PRODUCT_COMBINATION         VARCHAR(60),
+    DAYS_FIRST_DRAWING          NUMERIC(10,1),
+    DAYS_FIRST_DUE              NUMERIC(10,1),
+    DAYS_LAST_DUE_1ST_VERSION   NUMERIC(10,1),
+    DAYS_LAST_DUE               NUMERIC(10,1),
+    DAYS_TERMINATION            NUMERIC(10,1),
+    NFLAG_INSURED_ON_APPROVAL   SMALLINT,
+    OUTLIER_AMT_ANNUITY         SMALLINT,
+    OUTLIER_AMT_APPLICATION     SMALLINT,
+    OUTLIER_AMT_CREDIT          SMALLINT,
+    OUTLIER_AMT_GOODS_PRICE     SMALLINT,
+    YEARS_SINCE_DECISION        NUMERIC(5,1),
+    DECISION_YEAR_BUCKET        VARCHAR(10),
+    CREDIT_BAND                 VARCHAR(25),
+    IS_APPROVED                 SMALLINT,
+    IS_REFUSED                  SMALLINT,
+    CREDIT_TO_APPLICATION_RATIO NUMERIC(10,3)
+);
+
+CREATE INDEX idx_status ON loan_data (NAME_CONTRACT_STATUS);
+CREATE INDEX idx_contract ON loan_data (NAME_CONTRACT_TYPE);
+CREATE INDEX idx_client ON loan_data (NAME_CLIENT_TYPE);
+CREATE INDEX idx_customer ON loan_data (SK_ID_CURR);
